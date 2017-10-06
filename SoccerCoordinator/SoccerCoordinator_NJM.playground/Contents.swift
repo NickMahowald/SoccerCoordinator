@@ -1,5 +1,3 @@
-
-
 /*
  
  PROJECT NAME: SOCCER LEAGUE COORDINATOR IN SWIFT
@@ -52,7 +50,9 @@ let totalTeams = 3
 let experiencedPlayersPerTeam = experiencedPlayers / totalTeams
 let inexperiencedPlayersPerTeam = inexperiencedPlayers / totalTeams
 
+// creating empty dictionary to store all playernames with new team name
 
+var playerWithTeamName = [String: String] ()
 
 // Declared three teeams by making empty dictionaries to store players assigned to respective team
 var teamRaptors = [String: Bool] ()
@@ -78,9 +78,11 @@ for (playerName, playerExperience) in playerInfo {
         if playerExperience == true {
             teamRaptorsExperienced[playerName] = playerExperience
             teamRaptors[playerName] = playerExperience
+            playerWithTeamName[playerName] = "Raptors"
         } else {
             teamRaptorsNewbies[playerName] = playerExperience
             teamRaptors[playerName] = playerExperience
+            playerWithTeamName[playerName] = "Raptors"
         }
     }
     else if
@@ -89,9 +91,11 @@ for (playerName, playerExperience) in playerInfo {
         if playerExperience == true {
             teamDragonsExperienced[playerName] = playerExperience
             teamDragons[playerName] = playerExperience
+             playerWithTeamName[playerName] = "Dragons"
         } else {
             teamDragonsNewbies[playerName] = playerExperience
             teamDragons[playerName] = playerExperience
+            playerWithTeamName[playerName] = "Dragons"
         }
     }
     else if (teamSharksExperienced.count < experiencedPlayersPerTeam && playerExperience == true) || (teamSharksNewbies.count < inexperiencedPlayersPerTeam && playerExperience == false) {
@@ -99,9 +103,11 @@ for (playerName, playerExperience) in playerInfo {
         if playerExperience == true {
             teamSharksExperienced[playerName] = playerExperience
             teamSharks[playerName] = playerExperience
+            playerWithTeamName[playerName] = "Sharks"
         } else {
             teamSharksNewbies[playerName] = playerExperience
             teamSharks[playerName] = playerExperience
+            playerWithTeamName[playerName] = "Sharks"
         }
     }
 }
@@ -134,127 +140,34 @@ let playerGuardian: [String: String] =
 
 
 
-/*
- 
- ****Documenting practice schedule for three different teams
- 
- Dragons:   March 17, 1pm
- Sharks:    March 17, 3pm
- Raptors":  March 18, 1pm
- 
- */
+// Matched two seperate dictionaries with player-teamName and player-Guardian to write personalized letter to guardian
 
+var practiceDate = ""
+var letters = [String: String] ()
+var letterContents = ""
 
-
-
-//Created three separate functions to draft letters to player's guardians --> ***NOTE: ATTEMPTED MULTIPLE TIMES TO APPLY DRY PROCESS (DON'T REPEAT YOURSELF), HOWEVER I REPEATED MYSELF WHEN CREATING THE LETTERS, WHICH I'M PISSED ABOUT...
-
-
-//Created function that compares playerName in teamName dictionary to playerName1 in playerGuardian dictionary so as to only write letters to players on RAPTORS
-
-var teamName0 = "Raptors"
-var practiceTime0 = "March 18, 1pm"
-
-func writeLetter(theTeamName: Dictionary<String, Bool>) {
-    for (playerName, _) in theTeamName {
-        for (playerName1, _) in playerGuardian {
-            if (playerName == playerName1) {
-                let Guardian = playerGuardian[playerName1]!
-                
-                let personalizedLetter = ("Dear \(Guardian), I'm pleased to share that \(playerName) has been selected onto Team \(teamName0)! The \(teamName0) will have their first practice on \(practiceTime0). Sincerely, Coach")
-                
-                var letter = [String:String] ()
-                letter[playerName1] = personalizedLetter
-                
-                for (_, personalLetter) in letter {
-                    print(personalLetter)
-                }
-            } else {
+for (playerName, guardian) in playerGuardian {
+    for (playerName1, teamName) in playerWithTeamName {
+        if (playerName == playerName1) {
+            
+            if teamName == "Raptors" {
+                practiceDate = "March 18, at 1pm"
+            } else if teamName == "Dragons" {
+                practiceDate = "March 17, at 1pm"
+            } else if teamName == "Sharks" {
+                practiceDate = "March 17, at 3pm"
             }
-        }
-    }
-}
-
-// Function to writeLetter to the guardian's of teamRaptor
-writeLetter(theTeamName: teamRaptors)
-
-
-
-
-// Created function that compares playerName in teamName dictionary to playerName1 in playerGuardian dictionary so as to only write letters to players on SHARKS
-
-
-var teamName1 = "Sharks"
-var practiceTime1 = "March 17, 3pm"
-
-func writeLetter1(theTeamName: Dictionary<String, Bool>) {
-    for (playerName, _) in theTeamName {
-        for (playerName1, _) in playerGuardian {
-            if (playerName == playerName1) {
-                let Guardian = playerGuardian[playerName1]!
-                
-                
-                let personalizedLetter = ("Dear \(Guardian), I'm pleased to share that \(playerName) has been selected onto Team \(teamName1)! The \(teamName1) will have their first practice on \(practiceTime1). Sincerely, Coach")
-                
-                var letter = [String:String] ()
-                letter[playerName1] = personalizedLetter
-                
-                for (_, personalLetter) in letter {
-                    print(personalLetter)
-                }
-            } else {
-            }
-        }
-    }
-}
-
-// Function to writeLetter to the guardian's of teamSharks
-writeLetter1(theTeamName: teamSharks)
+            
+            letterContents = "Dear \(guardian), I'm pleased to tell you that \(playerName) has been selected onto team \(teamName)! The team's first practice is on \(practiceDate). Sincerely, League Coordinator (aka BOMB DIGGITY)."
+            print(letterContents)
+            letters[playerName] = letterContents
+            
+        }}}
 
 
 
 
-//Created function that compares playerName in teamName dictionary to playerName1 in playerGuardian dictionary so as to only write letters to players on DRAGONS
-
-var teamName2 = "Dragons"
-var practiceTime2 = "March 17, 1pm"
-
-func writeLetter2(theTeamName: Dictionary<String, Bool>) {
-    for (playerName, _) in theTeamName {
-        for (playerName1, _) in playerGuardian {
-            if (playerName == playerName1) {
-                let Guardian = playerGuardian[playerName1]!
-                
-                
-                let personalizedLetter = ("Dear \(Guardian), I'm pleased to share that \(playerName) has been selected onto Team \(teamName2)! The \(teamName2) will have their first practice on \(practiceTime2). Sincerely, Coach")
-                
-                var letter = [String:String] ()
-                letter[playerName1] = personalizedLetter
-                
-                for (_, personalLetter) in letter {
-                    print(personalLetter)
-                }
-            } else {
-            }
-        }
-    }
-}
-
-// Function to writeLetter to the guardian's of teamDragons
-writeLetter2(theTeamName: teamDragons)
-
-
-//Final check to confirm all teams have same amount of players
-
-teamRaptors.count
-teamDragons.count
-teamSharks.count
 
 
 
-/*
- 
- ************
- EXTRA COMMENTS: When creating the personalized letters I tried about 3 different systematic methods to prevent repetitive coding, but in the end I was unsuccessful. I attempted ann if, else if, else but couldn't figure it out. I attempted a switch iteration but couldn't figure it out, and attempted a few other random things that didn't work. I'm sure there is an easy solution to this, but at this point, I probably have spent over four hours on the letter alone, so I figured it was time to move on and retroactively figure out what I did wrong.
- 
- */
+
